@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36301.6 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StocksApp", "StocksApp\StocksApp.csproj", "{C537E876-A29E-45E8-A2FA-6532F08DF52D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceContracts", "ServiceContracts\ServiceContracts.csproj", "{55209B11-5DDB-468E-A1AE-7DCEA42C4869}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C537E876-A29E-45E8-A2FA-6532F08DF52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C537E876-A29E-45E8-A2FA-6532F08DF52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C537E876-A29E-45E8-A2FA-6532F08DF52D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55209B11-5DDB-468E-A1AE-7DCEA42C4869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55209B11-5DDB-468E-A1AE-7DCEA42C4869}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55209B11-5DDB-468E-A1AE-7DCEA42C4869}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55209B11-5DDB-468E-A1AE-7DCEA42C4869}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
