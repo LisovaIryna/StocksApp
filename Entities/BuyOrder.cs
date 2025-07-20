@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Entities;
+namespace ServiceContracts.DTO;
 
 /// <summary>
 /// Represents a buy order to purchase the stocks

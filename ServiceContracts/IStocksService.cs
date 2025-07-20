@@ -1,4 +1,4 @@
-﻿namespace ServiceContracts;
+﻿namespace ServiceContracts.DTO;
 
 /// <summary>
 /// Represents Stocks service
