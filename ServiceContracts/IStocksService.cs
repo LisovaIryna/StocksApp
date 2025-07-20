@@ -1,5 +1,8 @@
 ﻿namespace ServiceContracts;
 
+/// <summary>
+/// Represents Stocks service
+/// </summary>
 public interface IStocksService
 {
     /// <summary>
