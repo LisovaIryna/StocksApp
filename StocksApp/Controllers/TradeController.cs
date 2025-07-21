@@ -3,11 +3,14 @@ using Microsoft.Extensions.Options;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using StocksApp.Models;
+using System.Globalization;
 
 namespace StocksApp.Controllers;
 
 public class TradeController : Controller
 {
+    CultureInfo cultureInfo = new("en-US");
+
     private readonly TradingOptions _tradingOptions;
     private readonly IStocksService _stocksService;
     private readonly IFinnhubService _finnhubService;
@@ -41,7 +44,7 @@ public class TradeController : Controller
             {
                 StockSymbol = Convert.ToString(profileDictionary["ticker"]),
                 StockName = Convert.ToString(profileDictionary["name"]),
-                Price = Convert.ToDouble(quoteDictionary["c"].ToString())
+                Price = Convert.ToDouble(quoteDictionary["c"].ToString(), cultureInfo)
             };
         }
 
