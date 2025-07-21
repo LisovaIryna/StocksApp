@@ -37,7 +37,7 @@ public class TradeController : Controller
 
         if (profileDictionary != null && quoteDictionary != null)
         {
-            stockTrade = new()
+            stockTrade = new StockTrade()
             {
                 StockSymbol = Convert.ToString(profileDictionary["ticker"]),
                 StockName = Convert.ToString(profileDictionary["name"]),
