@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ServiceContracts;
+using ServiceContracts.DTO;
+using StocksApp.Models;
 
 namespace StocksApp.Controllers;
 
@@ -19,8 +21,30 @@ public class TradeController : Controller
         _configuration = configuration;
     }
 
-    public IActionResult Index()
+    [Route("/")]
+    public async Task<IActionResult> Index()
     {
-        return View();
+        if (string.IsNullOrEmpty(_tradingOptions.DefaultStockSymbol))
+            _tradingOptions.DefaultStockSymbol = "MSFT";
+
+        Dictionary<string, object>? profileDictionary = await _finnhubService.GetCompanyProfile(_tradingOptions.DefaultStockSymbol);
+        Dictionary<string, object>? quoteDictionary = await _finnhubService.GetStockPriceQuote(_tradingOptions.DefaultStockSymbol);
+
+        StockTrade stockTrade = new()
+        {
+            StockSymbol = _tradingOptions.DefaultStockSymbol
+        };
+
+        if (profileDictionary != null && quoteDictionary != null)
+        {
+            stockTrade = new()
+            {
+                StockSymbol = Convert.ToString(profileDictionary["ticker"]),
+                StockName = Convert.ToString(profileDictionary["name"]),
+                Price = Convert.ToDouble(quoteDictionary["c"].ToString())
+            };
+        }
+
+        return View(stockTrade);
     }
 }
