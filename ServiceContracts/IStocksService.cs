@@ -14,13 +14,13 @@ public interface IStocksService
     /// <summary>
     /// Creates a sell order
     /// </summary>
-    /// <param name="buyOrderRequest">Sell order object</param>
-    Task<SellOrderResponse> CreateSellOrder(SellOrderRequest? buyOrderRequest);
+    /// <param name="sellOrderRequest">Sell order object</param>
+    Task<SellOrderResponse> CreateSellOrder(SellOrderRequest? sellOrderRequest);
 
     /// <summary>
     /// Returns all existing buy orders
     /// </summary>
-    /// <returns>Returns a list of object of BuyOrder type</returns>
+    /// <returns>Returns a list of objects of BuyOrder type</returns>
     Task<List<BuyOrderResponse>> GetBuyOrders();
 
     /// <summary>
