@@ -48,6 +48,8 @@ public class TradeController : Controller
             };
         }
 
+        ViewBag.FinnhubToken = _configuration["FinnhubToken"];
+
         return View(stockTrade);
     }
 }
