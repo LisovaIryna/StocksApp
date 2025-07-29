@@ -7,14 +7,14 @@
 
                 <div class="stock">
                     <h1 class="stock-title">@Model.StockName (@Model.StockSymbol)</h1>
-                    <h2 class="stock-price"><small class="text-grey">$</small> <span>@Model.Price.ToString("N")</span></h2>
+                    <h2 class="stock-price"><small class="text-grey">$</small> <span class="price">@Model.Price.ToString("N")</span></h2>
                 </div>
 
             </div>
         </div>
     </div>
 
-    <input type="hidden" name="StockSymbol" value="@Model.StockSymbol" />
+    <input type="hidden" name="StockSymbol" id="StockSymbol" value="@Model.StockSymbol" />
     <input type="hidden" id="FinnhubToken" value="@ViewBag.FinnhubToken" />
 </form>
 

@@ -18,7 +18,7 @@ socket.addEventListener('message', function (event) {
     }
 
     var eventData = JSON.parse(event.data);
-    if (eventdata) {
+    if (eventData) {
         if (eventData.data) {
             var updatedPrice = JSON.parse(event.data).data[0].p;
             var timeStamp = JSON.parse(event.data).data[0].t;
