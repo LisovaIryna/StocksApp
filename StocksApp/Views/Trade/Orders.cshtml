@@ -46,7 +46,7 @@
                     <h3>@sellOrder.StockName (@sellOrder.StockSymbol)</h3>
                     <h5 class="mb">@sellOrder.Quantity <span class="text-grey">shares at </span> $@sellOrder.Price.ToString("N")</h5>
                     <h5 class="mb"><span class="text-grey">Trade Amount: </span> $@sellOrder.TradeAmount.ToString("N")</h5>
-                    <div class="text-grey">@sellOrder.DateAndTimeOfOrder.ToString("dd MMMM yyyy hh:mm:ss tt")</div>
+                    <div class="text-grey">@sellOrder.DateAndTimeOfOrder.ToString("dd MMMM yyyy hh:mm:ss tt", new CultureInfo("en-US"))</div>
                 </div>
             }
 
