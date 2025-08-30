@@ -80,4 +80,29 @@ public class TradeController : Controller
 
         return RedirectToAction(nameof(Orders));
     }
+
+    [Route("[action]")]
+    [HttpPost]
+    public async Task<IActionResult> SellOrder(SellOrderRequest sellOrderRequest)
+    {
+        sellOrderRequest.DateAndTimeOfOrder = DateTime.Now;
+
+        ModelState.Clear();
+        TryValidateModel(sellOrderRequest);
+        if (!ModelState.IsValid)
+        {
+            ViewBag.Errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            StockTrade stockTrade = new()
+            {
+                StockName = sellOrderRequest.StockName,
+                StockSymbol = sellOrderRequest.StockSymbol,
+                Quantity = sellOrderRequest.Quantity
+            };
+            return View("Index", stockTrade);
+        }
+
+        SellOrderResponse sellOrderResponse = await _stocksService.CreateSellOrder(sellOrderRequest);
+
+        return RedirectToAction(nameof(Orders));
+    }
 }
