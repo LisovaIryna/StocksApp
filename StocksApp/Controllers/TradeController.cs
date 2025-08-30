@@ -105,4 +105,21 @@ public class TradeController : Controller
 
         return RedirectToAction(nameof(Orders));
     }
+
+    [Route("[action]")]
+    public async Task<IActionResult> Orders()
+    {
+        List<BuyOrderResponse> buyOrderResponses = await _stocksService.GetBuyOrders();
+        List<SellOrderResponse> sellOrderResponses = await _stocksService.GetSellOrders();
+
+        Orders orders = new()
+        {
+            BuyOrders = buyOrderResponses,
+            SellOrders = sellOrderResponses
+        };
+
+        ViewBag.TradingOptions = _tradingOptions;
+
+        return View(orders);
+    }
 }
