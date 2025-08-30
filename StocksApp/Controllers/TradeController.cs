@@ -7,6 +7,7 @@ using System.Globalization;
 
 namespace StocksApp.Controllers;
 
+[Route("[controller]")]
 public class TradeController : Controller
 {
     CultureInfo cultureInfo = new("en-US");
@@ -25,6 +26,8 @@ public class TradeController : Controller
     }
 
     [Route("/")]
+    [Route("[action]")]
+    [Route("~/[controller]")]
     public async Task<IActionResult> Index()
     {
         if (string.IsNullOrEmpty(_tradingOptions.DefaultStockSymbol))
