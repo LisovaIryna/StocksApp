@@ -26,7 +26,7 @@
                     <h3 class="text-grey mb">New Order</h3>
                     <label for="Quantity" class="mt">Quantity:</label>
                     <div class="w-25">
-                        <input type="number" name="Quantity" value="@Model.Quantity"
+                        <input type="number" name="Quantity" asp-for="Quantity"
                                main="1" max="100000" placeholder="Quantity" required class="form-input mb" autofocus />
                     </div>
                 </div>
@@ -58,9 +58,9 @@
         </div>
     </div>
 
-    <input type="hidden" name="StockName" id="StockName" value="StockName" />
-    <input type="hidden" name="StockSymbol" id="StockSymbol" value="@Model.StockSymbol" />
-    <input type="hidden" name="Price" id="stock-price-panel" value="@Model.Price" />
+    <input type="hidden" asp-for="StockName" />
+    <input type="hidden" asp-for="StockSymbol" />
+    <input type="hidden" asp-for="Price" id="stock-price-panel" />
     <input type="hidden" id="FinnhubToken" value="@ViewBag.FinnhubToken" />
 </form>
 
