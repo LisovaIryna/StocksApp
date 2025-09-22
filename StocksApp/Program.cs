@@ -1,3 +1,5 @@
+using Entities;
+using Microsoft.EntityFrameworkCore;
 using ServiceContracts;
 using ServiceContracts.DTO;
 using Services;
@@ -8,6 +10,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.Configure<TradingOptions>(builder.Configuration.GetSection("TradingOptions"));
 builder.Services.AddSingleton<IFinnhubService, FinnhubService>();
 builder.Services.AddSingleton<IStocksService, StocksService>();
+builder.Services.AddDbContext<StockMarketDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 builder.Services.AddHttpClient();
 
 var app = builder.Build();
