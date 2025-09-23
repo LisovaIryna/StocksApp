@@ -7,6 +7,7 @@ namespace ServiceContracts.DTO;
 /// </summary>
 public class SellOrder
 {
+    [Key]
     public Guid SellOrderID { get; set; }
 
     [Required(ErrorMessage = "Stock symbol can't be null or empty")]
