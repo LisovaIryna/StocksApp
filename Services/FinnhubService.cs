@@ -27,8 +27,7 @@ public class FinnhubService : IFinnhubService
 
         HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
-        StreamReader streamReader = new(httpResponseMessage.Content.ReadAsStream());
-        string response = streamReader.ReadToEnd();
+        string response = await httpResponseMessage.Content.ReadAsStringAsync();
 
         Dictionary<string, object>? responseDictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
 
@@ -53,8 +52,7 @@ public class FinnhubService : IFinnhubService
 
         HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
-        StreamReader streamReader = new(httpResponseMessage.Content.ReadAsStream());
-        string response = streamReader.ReadToEnd();
+        string response = await httpResponseMessage.Content.ReadAsStringAsync();
 
         Dictionary<string, object>? responseDictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
 
