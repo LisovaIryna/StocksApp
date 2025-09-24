@@ -45,8 +45,9 @@ public class TradeController : Controller
         {
             stockTrade = new StockTrade()
             {
-                StockSymbol = Convert.ToString(profileDictionary["ticker"]),
-                StockName = Convert.ToString(profileDictionary["name"]),
+                StockSymbol = Convert.ToString(profileDictionary["ticker"].ToString()),
+                StockName = Convert.ToString(profileDictionary["name"].ToString()),
+                Quantity = _tradingOptions.DefaultOrderQuantity ?? 0, 
                 Price = Convert.ToDouble(quoteDictionary["c"].ToString(), cultureInfo)
             };
         }
