@@ -8,8 +8,8 @@ using StocksApp;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.Configure<TradingOptions>(builder.Configuration.GetSection("TradingOptions"));
-builder.Services.AddSingleton<IFinnhubService, FinnhubService>();
-builder.Services.AddSingleton<IStocksService, StocksService>();
+builder.Services.AddTransient<IFinnhubService, FinnhubService>();
+builder.Services.AddTransient<IStocksService, StocksService>();
 builder.Services.AddDbContext<StockMarketDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
