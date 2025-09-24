@@ -3,7 +3,7 @@
 /// <summary>
 /// DTO class that represents a sell order
 /// </summary>
-public class SellOrderResponse
+public class SellOrderResponse : IOrderResponse
 {
     public Guid SellOrderID { get; set; }
     public string StockSymbol { get; set; }
@@ -11,6 +11,7 @@ public class SellOrderResponse
     public DateTime DateAndTimeOfOrder { get; set; }
     public uint Quantity { get; set; }
     public double Price { get; set; }
+    public OrderType TypeOfOrder => OrderType.SellOrder;
     public double TradeAmount { get; set; }
 
     public override bool Equals(object? obj)
