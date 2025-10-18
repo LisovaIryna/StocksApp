@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Microsoft.EntityFrameworkCore;
+using RepositoryContracts;
 using ServiceContracts.DTO;
 using Services.Helpers;
 
@@ -7,11 +8,11 @@ namespace Services;
 
 public class StocksService : IStocksService
 {
-    private readonly StockMarketDbContext _db;
+    private readonly IStocksRepository _stocksRepository;
 
-    public StocksService(StockMarketDbContext stockMarketDbContext)
+    public StocksService(IStocksRepository stocksRepository)
     {
-        _db = stockMarketDbContext;
+        _stocksRepository = stocksRepository;
     }
 
     public async Task<BuyOrderResponse> CreateBuyOrder(BuyOrderRequest? buyOrderRequest)
@@ -25,8 +26,7 @@ public class StocksService : IStocksService
 
         buyOrder.BuyOrderID = Guid.NewGuid();
 
-        _db.BuyOrders.Add(buyOrder);
-        await _db.SaveChangesAsync();
+        BuyOrder buyOrderRepository = await _stocksRepository.CreateBuyOrder(buyOrder);
 
         return buyOrder.ToBuyOrderResponse();
     }
@@ -42,23 +42,20 @@ public class StocksService : IStocksService
 
         sellOrder.SellOrderID = Guid.NewGuid();
 
-        _db.SellOrders.Add(sellOrder);
-        await _db.SaveChangesAsync();
+        SellOrder sellOrderRepository = await _stocksRepository.CreateSellOrder(sellOrder);
 
         return sellOrder.ToSellOrderResponse();
     }
 
     public async Task<List<BuyOrderResponse>> GetBuyOrders()
     {
-        return (await _db.BuyOrders
-            .OrderByDescending(temp => temp.DateAndTimeOfOrder).ToListAsync())
+        return (await _stocksRepository.GetBuyOrders())
             .Select(temp => temp.ToBuyOrderResponse()).ToList();
     }
 
     public async Task<List<SellOrderResponse>> GetSellOrders()
     {
-        return (await _db.SellOrders
-            .OrderByDescending(temp => temp.DateAndTimeOfOrder).ToListAsync())
+        return (await _stocksRepository.GetSellOrders())
             .Select(temp => temp.ToSellOrderResponse()).ToList();
     }
 }
