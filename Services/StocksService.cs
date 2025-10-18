@@ -1,6 +1,4 @@
-﻿using Entities;
-using Microsoft.EntityFrameworkCore;
-using RepositoryContracts;
+﻿using RepositoryContracts;
 using ServiceContracts.DTO;
 using Services.Helpers;
 

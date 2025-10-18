@@ -26,28 +26,27 @@ public class TradeController : Controller
         _configuration = configuration;
     }
 
-    [Route("/")]
-    [Route("[action]")]
-    [Route("~/[controller]")]
-    public async Task<IActionResult> Index()
+    [Route("[action]/{stockSymbol}")]
+    [Route("~/[controller]/{stockSymbol}")]
+    public async Task<IActionResult> Index(string stockSymbol)
     {
-        if (string.IsNullOrEmpty(_tradingOptions.DefaultStockSymbol))
-            _tradingOptions.DefaultStockSymbol = "MSFT";
+        if (string.IsNullOrEmpty(stockSymbol))
+            stockSymbol = "MSFT";
 
-        Dictionary<string, object>? profileDictionary = await _finnhubService.GetCompanyProfile(_tradingOptions.DefaultStockSymbol);
-        Dictionary<string, object>? quoteDictionary = await _finnhubService.GetStockPriceQuote(_tradingOptions.DefaultStockSymbol);
+        Dictionary<string, object>? profileDictionary = await _finnhubService.GetCompanyProfile(stockSymbol);
+        Dictionary<string, object>? quoteDictionary = await _finnhubService.GetStockPriceQuote(stockSymbol);
 
         StockTrade stockTrade = new()
         {
-            StockSymbol = _tradingOptions.DefaultStockSymbol
+            StockSymbol = stockSymbol
         };
 
         if (profileDictionary != null && quoteDictionary != null)
         {
             stockTrade = new StockTrade()
             {
-                StockSymbol = Convert.ToString(profileDictionary["ticker"].ToString()),
-                StockName = Convert.ToString(profileDictionary["name"].ToString()),
+                StockSymbol = profileDictionary["ticker"].ToString(),
+                StockName = profileDictionary["name"].ToString(),
                 Quantity = _tradingOptions.DefaultOrderQuantity ?? 0, 
                 Price = Convert.ToDouble(quoteDictionary["c"].ToString(), cultureInfo)
             };
