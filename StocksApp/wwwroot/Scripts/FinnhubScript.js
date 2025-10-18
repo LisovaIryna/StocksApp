@@ -2,6 +2,7 @@
 const token = document.querySelector("#FinnhubToken").value;
 const socket = new WebSocket(`wss://ws.finnhub.io?token=${token}`);
 var stockSymbol = document.getElementById("StockSymbol").value; // get symbol from input hidden
+var counter = 0;
 
 // Connection opened. Subscribe to a symbol
 socket.addEventListener('open', function (event) {
@@ -21,15 +22,30 @@ socket.addEventListener('message', function (event) {
     if (eventData) {
         if (eventData.data) {
             var updatedPrice = JSON.parse(event.data).data[0].p;
+            var timeStamp = JSON.parse(event.data).data[0].t;
 
-            $(".price").text(updatedPrice.toFixed(2));
-            $("#price").val(updatedPrice.toFixed(2));
+            // update the chart for every 6 server events
+            if (counter == 0 || counter % 6 == 0) {
+                // add price to prices array to reflect the same in chart
+                prices.push(updatedPrice);
+
+                // add time to labels array to reflect the same in chart
+                var timeStampDate = new Date(timeStamp);
+                labels.push(timeStampDate.toLocaleDateString());
+                chart.update();
+            }
+            counter++;
+
+            // update the UI
+            $(".price").text(updatedPrice.toFixed(2)); // price - big display
+            $("#price").val(updatedPrice.toFixed(2)); // price - input hidden
         }
     }
 });
 
 // Unsubscribe
 var unsubscribe = function (symbol) {
+    // disconnect from server
     socket.send(JSON.stringify({ 'type': 'unsubscribe', 'symbol': symbol }))
 }
 
