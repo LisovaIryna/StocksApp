@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using RepositoryContracts;
+using Serilog;
 using System.Text.Json;
 
 namespace Repositories;
@@ -8,15 +10,22 @@ public class FinnhubRepository : IFinnhubRepository
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IConfiguration _configuration;
+    private readonly ILogger<FinnhubRepository> _logger;
+    private readonly IDiagnosticContext _diagnosticContext;
 
-    public FinnhubRepository(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+    public FinnhubRepository(IHttpClientFactory httpClientFactory, IConfiguration configuration, ILogger<FinnhubRepository> logger, IDiagnosticContext diagnosticContext)
     {
         _httpClientFactory = httpClientFactory;
         _configuration = configuration;
+        _logger = logger;
+        _diagnosticContext = diagnosticContext;
     }
 
     public async Task<Dictionary<string, object>?> GetCompanyProfile(string stockSymbol)
     {
+        // Log
+        _logger.LogInformation("In {ClassName}.{MethodName}", nameof(FinnhubRepository), nameof(GetCompanyProfile));
+
         HttpClient httpClient = _httpClientFactory.CreateClient();
 
         HttpRequestMessage httpRequestMessage = new()
@@ -28,6 +37,7 @@ public class FinnhubRepository : IFinnhubRepository
         HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
         string response = await httpResponseMessage.Content.ReadAsStringAsync();
+        _diagnosticContext.Set("Response from finnhub", response);
 
         Dictionary<string, object>? responseDictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
 
@@ -41,6 +51,9 @@ public class FinnhubRepository : IFinnhubRepository
 
     public async Task<Dictionary<string, object>?> GetStockPriceQuote(string stockSymbol)
     {
+        // Log
+        _logger.LogInformation("In {ClassName}.{MethodName}", nameof(FinnhubRepository), nameof(GetStockPriceQuote));
+
         HttpClient httpClient = _httpClientFactory.CreateClient();
 
         HttpRequestMessage httpRequestMessage = new()
@@ -52,6 +65,7 @@ public class FinnhubRepository : IFinnhubRepository
         HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
         string response = await httpResponseMessage.Content.ReadAsStringAsync();
+        _diagnosticContext.Set("Response from finnhub", response);
 
         Dictionary<string, object>? responseDictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
 
@@ -65,6 +79,9 @@ public class FinnhubRepository : IFinnhubRepository
 
     public async Task<List<Dictionary<string, string>>?> GetStocks()
     {
+        // Log
+        _logger.LogInformation("In {ClassName}.{MethodName}", nameof(FinnhubRepository), nameof(GetStocks));
+
         HttpClient httpClient = _httpClientFactory.CreateClient();
 
         HttpRequestMessage httpRequestMessage = new()
@@ -87,6 +104,9 @@ public class FinnhubRepository : IFinnhubRepository
 
     public async Task<Dictionary<string, object>?> SearchStocks(string stockSymbolToSearch)
     {
+        // Log
+        _logger.LogInformation("In {ClassName}.{MethodName}", nameof(FinnhubRepository), nameof(SearchStocks));
+
         HttpClient httpClient = _httpClientFactory.CreateClient();
 
         HttpRequestMessage httpRequestMessage = new()
@@ -98,6 +118,7 @@ public class FinnhubRepository : IFinnhubRepository
         HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
         string response = await httpResponseMessage.Content.ReadAsStringAsync();
+        _diagnosticContext.Set("Response from finnhub", response);
 
         Dictionary<string, object>? responseDictionary = JsonSerializer.Deserialize<Dictionary<string, object>>(response);
 
