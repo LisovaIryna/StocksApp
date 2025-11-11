@@ -25,5 +25,9 @@
     <ProjectReference Include="..\ServiceContracts\ServiceContracts.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
+	
+  <ItemGroup>
+	<InternalsVisibleTo Include="Tests"/>
+  </ItemGroup>
 
 </Project>
