@@ -5,7 +5,7 @@ namespace ServiceContracts.DTO;
 /// <summary>
 /// DTO class that represents a buy order to purchase
 /// </summary>
-public class BuyOrderRequest : IValidatableObject
+public class BuyOrderRequest : IValidatableObject, IOrderRequest
 {
     [Required(ErrorMessage = "Stock symbol can't be null or empty")]
     public string StockSymbol { get; set; }
