@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using RepositoryContracts;
+using ServiceContracts;
 using ServiceContracts.DTO;
 using Services;
 
