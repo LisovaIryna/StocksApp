@@ -7,6 +7,7 @@ using ServiceContracts;
 using ServiceContracts.DTO;
 using Services;
 using StocksApp;
+using StocksApp.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,7 @@ builder.Services.AddHttpLogging(options =>
     options.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.RequestProperties | Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.ResponsePropertiesAndHeaders;
 });
 builder.Services.AddHttpClient();
+builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 var app = builder.Build();
 
@@ -39,9 +41,14 @@ app.UseSerilogRequestLogging();
 
 if (builder.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
+else
+{
+    app.UseExceptionHandler("/Error");
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
+}
 
 if (builder.Environment.IsEnvironment("Test") == false)
-Rotativa.AspNetCore.RotativaConfiguration.Setup("wwwroot", wkhtmltopdfRelativePath: "Rotativa");
+    Rotativa.AspNetCore.RotativaConfiguration.Setup("wwwroot", wkhtmltopdfRelativePath: "Rotativa");
 
 app.UseHttpLogging();
 app.UseStaticFiles();
