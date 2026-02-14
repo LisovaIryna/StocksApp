@@ -1,4 +1,5 @@
-﻿using RepositoryContracts;
+﻿using Exceptions;
+using RepositoryContracts;
 using ServiceContracts;
 
 namespace Services;
@@ -14,21 +15,49 @@ public class FinnhubService : IFinnhubService
 
     public async Task<Dictionary<string, object>?> GetCompanyProfile(string stockSymbol)
     {
-        return await _finnhubRepository.GetCompanyProfile(stockSymbol);
+        try
+        {
+            return await _finnhubRepository.GetCompanyProfile(stockSymbol);
+        }
+        catch (Exception ex)
+        {
+            throw new FinnhubException("Unable to connect to finnhub", ex);
+        }
     }
 
     public async Task<Dictionary<string, object>?> GetStockPriceQuote(string stockSymbol)
     {
-        return await _finnhubRepository.GetStockPriceQuote(stockSymbol);
+        try
+        {
+            return await _finnhubRepository.GetStockPriceQuote(stockSymbol);
+        }
+        catch (Exception ex)
+        {
+            throw new FinnhubException("Unable to connect to finnhub", ex);
+        }
     }
 
     public async Task<List<Dictionary<string, string>>?> GetStocks()
     {
-        return await _finnhubRepository.GetStocks();
+        try
+        {
+            return await _finnhubRepository.GetStocks();
+        }
+        catch (Exception ex)
+        {
+            throw new FinnhubException("Unable to connect to finnhub", ex);
+        }
     }
 
     public async Task<Dictionary<string, object>?> SearchStocks(string stockSymbolToSearch)
     {
-        return await _finnhubRepository.SearchStocks(stockSymbolToSearch);
+        try
+        {
+            return await _finnhubRepository.SearchStocks(stockSymbolToSearch);
+        }
+        catch (Exception ex)
+        {
+            throw new FinnhubException("Unable to connect to finnhub", ex);
+        }
     }
 }
