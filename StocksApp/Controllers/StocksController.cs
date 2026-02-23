@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ServiceContracts;
+using ServiceContracts.FinnhubService;
 using StocksApp.Models;
 
 namespace StocksApp.Controllers;
@@ -9,13 +10,13 @@ namespace StocksApp.Controllers;
 public class StocksController : Controller
 {
     private readonly TradingOptions _tradingOptions;
-    private readonly IFinnhubCompanyProfileService _finnhubService;
+    private readonly IFinnhubStocksService _finnhubStocksService;
     private readonly ILogger<StocksController> _logger;
 
-    public StocksController(IOptions<TradingOptions> tradingOptions, IFinnhubCompanyProfileService finnhubService, ILogger<StocksController> logger)
+    public StocksController(IOptions<TradingOptions> tradingOptions, IFinnhubStocksService finnhubStocksService, ILogger<StocksController> logger)
     {
         _tradingOptions = tradingOptions.Value;
-        _finnhubService = finnhubService;
+        _finnhubStocksService = finnhubStocksService;
         _logger = logger;
     }
 
@@ -27,7 +28,7 @@ public class StocksController : Controller
         _logger.LogInformation("In StocksController.Explore() action method");
         _logger.LogDebug("stock: {stock}, showAll: {showAll}", stock, showAll);
 
-        List<Dictionary<string, string>>? stocksDictionary = await _finnhubService.GetStocks();
+        List<Dictionary<string, string>>? stocksDictionary = await _finnhubStocksService.GetStocks();
         List<Stock> stocks = new();
 
         if (stocksDictionary is not null)
