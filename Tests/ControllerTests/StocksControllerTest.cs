@@ -14,15 +14,15 @@ namespace Tests.ControllerTests;
 
 public class StocksControllerTest
 {
-    private readonly IFinnhubService _finnhubService;
-    private readonly Mock<IFinnhubService> _finnhubServiceMock;
+    private readonly IFinnhubCompanyProfileService _finnhubService;
+    private readonly Mock<IFinnhubCompanyProfileService> _finnhubServiceMock;
     private readonly Mock<ILogger<StocksController>> _loggerMock;
     private readonly Fixture _fixture;
 
     public StocksControllerTest()
     {
         _fixture = new Fixture();
-        _finnhubServiceMock = new Mock<IFinnhubService>();
+        _finnhubServiceMock = new Mock<IFinnhubCompanyProfileService>();
         _loggerMock = new Mock<ILogger<StocksController>>();
         _finnhubService = _finnhubServiceMock.Object;
     }

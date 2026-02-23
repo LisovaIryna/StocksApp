@@ -5,7 +5,7 @@ using Services.Helpers;
 
 namespace Services;
 
-public class StocksService : IStocksService
+public class StocksService : IBuyOrdersService
 {
     private readonly IStocksRepository _stocksRepository;
 

@@ -1,11 +1,11 @@
 ﻿using ServiceContracts.DTO;
 
-namespace ServiceContracts;
+namespace ServiceContracts.StocksService;
 
 /// <summary>
 /// Represents Stocks service
 /// </summary>
-public interface IStocksService
+public interface IBuyOrdersService
 {
     /// <summary>
     /// Creates a buy order
@@ -14,20 +14,8 @@ public interface IStocksService
     Task<BuyOrderResponse> CreateBuyOrder(BuyOrderRequest? buyOrderRequest);
 
     /// <summary>
-    /// Creates a sell order
-    /// </summary>
-    /// <param name="sellOrderRequest">Sell order object</param>
-    Task<SellOrderResponse> CreateSellOrder(SellOrderRequest? sellOrderRequest);
-
-    /// <summary>
     /// Returns all existing buy orders
     /// </summary>
     /// <returns>Returns a list of objects of BuyOrder type</returns>
     Task<List<BuyOrderResponse>> GetBuyOrders();
-
-    /// <summary>
-    /// Returns all existing sell orders
-    /// </summary>
-    /// <returns>Returns a list of objects of SellOrder type</returns>
-    Task<List<SellOrderResponse>> GetSellOrders();
 }

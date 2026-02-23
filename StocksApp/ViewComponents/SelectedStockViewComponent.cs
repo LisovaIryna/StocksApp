@@ -8,11 +8,11 @@ namespace StocksApp.ViewComponents;
 public class SelectedStockViewComponent :ViewComponent
 {
     private readonly TradingOptions _tradingOptions;
-    private readonly IStocksService _stocksService;
-    private readonly IFinnhubService _finnhubService;
+    private readonly IBuyOrdersService _stocksService;
+    private readonly IFinnhubCompanyProfileService _finnhubService;
     private readonly IConfiguration _configuration;
 
-    public SelectedStockViewComponent (IOptions<TradingOptions> tradingOptions, IStocksService stocksService, IFinnhubService finnhubService, IConfiguration configuration)
+    public SelectedStockViewComponent (IOptions<TradingOptions> tradingOptions, IBuyOrdersService stocksService, IFinnhubCompanyProfileService finnhubService, IConfiguration configuration)
     {
         _tradingOptions = tradingOptions.Value;
         _stocksService = stocksService;

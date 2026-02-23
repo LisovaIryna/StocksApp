@@ -9,10 +9,10 @@ namespace StocksApp.Controllers;
 public class StocksController : Controller
 {
     private readonly TradingOptions _tradingOptions;
-    private readonly IFinnhubService _finnhubService;
+    private readonly IFinnhubCompanyProfileService _finnhubService;
     private readonly ILogger<StocksController> _logger;
 
-    public StocksController(IOptions<TradingOptions> tradingOptions, IFinnhubService finnhubService, ILogger<StocksController> logger)
+    public StocksController(IOptions<TradingOptions> tradingOptions, IFinnhubCompanyProfileService finnhubService, ILogger<StocksController> logger)
     {
         _tradingOptions = tradingOptions.Value;
         _finnhubService = finnhubService;

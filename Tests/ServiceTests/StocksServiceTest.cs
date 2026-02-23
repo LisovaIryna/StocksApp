@@ -12,7 +12,7 @@ namespace Tests.ServiceTests;
 
 public class StocksServiceTest
 {
-    private readonly IStocksService _stocksService;
+    private readonly IBuyOrdersService _stocksService;
     private readonly Mock<IStocksRepository> _stocksRepositoryMock;
     private readonly IStocksRepository _stocksRepository;
     private readonly IFixture _fixture;

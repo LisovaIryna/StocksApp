@@ -4,7 +4,7 @@ using ServiceContracts;
 
 namespace Services;
 
-public class FinnhubService : IFinnhubService
+public class FinnhubService : IFinnhubCompanyProfileService
 {
     private readonly IFinnhubRepository _finnhubRepository;
 

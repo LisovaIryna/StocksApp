@@ -15,12 +15,12 @@ public class TradeController : Controller
     CultureInfo cultureInfo = new("en-US");
 
     private readonly TradingOptions _tradingOptions;
-    private readonly IStocksService _stocksService;
-    private readonly IFinnhubService _finnhubService;
+    private readonly IBuyOrdersService _stocksService;
+    private readonly IFinnhubCompanyProfileService _finnhubService;
     private readonly IConfiguration _configuration;
     private readonly ILogger<TradeController> _logger;
 
-    public TradeController(IOptions<TradingOptions> tradingOptions, IStocksService stocksService, IFinnhubService finnhubService, IConfiguration configuration, ILogger<TradeController> logger)
+    public TradeController(IOptions<TradingOptions> tradingOptions, IBuyOrdersService stocksService, IFinnhubCompanyProfileService finnhubService, IConfiguration configuration, ILogger<TradeController> logger)
     {
         _tradingOptions = tradingOptions.Value;
         _stocksService = stocksService;
