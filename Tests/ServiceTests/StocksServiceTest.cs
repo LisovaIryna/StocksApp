@@ -22,7 +22,7 @@ public class StocksServiceTest
         _fixture = new Fixture();
         _stocksRepositoryMock = new();
         _stocksRepository = _stocksRepositoryMock.Object;
-        _stocksService = new StocksService(_stocksRepository);
+        _stocksService = new StocksSellOrdersService(_stocksRepository);
     }
 
     #region CreateBuyOrder
