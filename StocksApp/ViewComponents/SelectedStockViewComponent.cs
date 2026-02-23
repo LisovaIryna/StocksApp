@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ServiceContracts;
-using ServiceContracts.DTO;
+using ServiceContracts.FinnhubService;
+using ServiceContracts.StocksService;
 using Microsoft.Extensions.Options;
 
 namespace StocksApp.ViewComponents;
@@ -8,15 +8,17 @@ namespace StocksApp.ViewComponents;
 public class SelectedStockViewComponent :ViewComponent
 {
     private readonly TradingOptions _tradingOptions;
-    private readonly IBuyOrdersService _stocksService;
-    private readonly IFinnhubCompanyProfileService _finnhubService;
+    private readonly IBuyOrdersService _stocksBuyOrdersService;
+    private readonly IFinnhubCompanyProfileService _finnhubCompanyProfileService;
+    private readonly IFinnhubStockPriceQuoteService _finnhubStockPriceQuoteService;
     private readonly IConfiguration _configuration;
 
-    public SelectedStockViewComponent (IOptions<TradingOptions> tradingOptions, IBuyOrdersService stocksService, IFinnhubCompanyProfileService finnhubService, IConfiguration configuration)
+    public SelectedStockViewComponent (IOptions<TradingOptions> tradingOptions, IBuyOrdersService stocksBuyOrdersService, IFinnhubCompanyProfileService finnhubCompanyProfileService, IFinnhubStockPriceQuoteService finnhubStockPriceQuoteService, IConfiguration configuration)
     {
         _tradingOptions = tradingOptions.Value;
-        _stocksService = stocksService;
-        _finnhubService = finnhubService;
+        _stocksBuyOrdersService = stocksBuyOrdersService;
+        _finnhubCompanyProfileService = finnhubCompanyProfileService;
+        _finnhubStockPriceQuoteService = finnhubStockPriceQuoteService;
         _configuration = configuration;
     }
 
@@ -26,8 +28,8 @@ public class SelectedStockViewComponent :ViewComponent
 
         if (stockSymbol != null)
         {
-            profitDictionary = await _finnhubService.GetCompanyProfile(stockSymbol);
-            var stockPriceDictionary = await _finnhubService.GetStockPriceQuote(stockSymbol);
+            profitDictionary = await _finnhubCompanyProfileService.GetCompanyProfile(stockSymbol);
+            var stockPriceDictionary = await _finnhubStockPriceQuoteService.GetStockPriceQuote(stockSymbol);
             if (stockPriceDictionary != null && profitDictionary != null)
                 profitDictionary.Add("price", stockPriceDictionary["c"]);
         }
