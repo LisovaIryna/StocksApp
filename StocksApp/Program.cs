@@ -3,9 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Repositories;
 using RepositoryContracts;
 using Serilog;
-using ServiceContracts;
-using ServiceContracts.DTO;
-using Services;
+using ServiceContracts.FinnhubService;
+using ServiceContracts.StocksService;
+using Services.FinnhubService;
+using Services.StocksService;
 using StocksApp;
 using StocksApp.Middleware;
 
@@ -21,7 +22,11 @@ builder.Host.UseSerilog((HostBuilderContext context, IServiceProvider services, 
 builder.Services.AddControllersWithViews();
 builder.Services.Configure<TradingOptions>(builder.Configuration.GetSection("TradingOptions"));
 builder.Services.AddTransient<IFinnhubCompanyProfileService, FinnhubCompanyProfileService>();
+builder.Services.AddTransient<IFinnhubStockPriceQuoteService, FinnhubStockPriceQuoteService>();
+builder.Services.AddTransient<IFinnhubSearchStocksService, FinnhubSearchStocksService>();
+builder.Services.AddTransient<IFinnhubStocksService, FinnhubStocksService>();
 builder.Services.AddTransient<IBuyOrdersService, StocksBuyOrdersService>();
+builder.Services.AddTransient<ISellOrdersService, StocksSellOrdersService>();
 builder.Services.AddTransient<IFinnhubRepository, FinnhubRepository>();
 builder.Services.AddTransient<IStocksRepository, StocksRepository>();
 builder.Services.AddDbContext<StockMarketDbContext>(options =>
