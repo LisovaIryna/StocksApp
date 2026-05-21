@@ -3,7 +3,7 @@
 namespace ServiceContracts.DTO;
 
 /// <summary>
-/// DTO class that represents a sell order
+/// DTO class that represents a sell order - that can be used while inserting/updating
 /// </summary>
 public class SellOrderRequest : IValidatableObject, IOrderRequest
 {

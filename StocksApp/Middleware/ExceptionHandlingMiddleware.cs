@@ -24,11 +24,17 @@ public class ExceptionHandlingMiddleware : IMiddleware
         {
             LogException(ex);
 
+            //context.Response.StatusCode = 500;
+            //await context.Response.WriteAsync(ex.Message);
+
             throw;
         }
         catch (Exception ex)
         {
             LogException(ex);
+
+            //context.Response.StatusCode = 500;
+            //await context.Response.WriteAsync(ex.Message);
 
             throw;
         }
@@ -41,7 +47,7 @@ public class ExceptionHandlingMiddleware : IMiddleware
             if (ex.InnerException.InnerException != null)
             {
                 _logger.LogError("{ExceptionType} {ExceptionMessage}", ex.InnerException.InnerException.GetType().ToString(), ex.InnerException.InnerException.Message);
-                _diagnosticContext.Set("Exception", $"{ex.InnerException.GetType().ToString()}, {ex.InnerException.InnerException.Message}, {ex.InnerException.InnerException.StackTrace}");
+                _diagnosticContext.Set("Exception", $"{ex.InnerException.InnerException.GetType().ToString()}, {ex.InnerException.InnerException.Message}, {ex.InnerException.InnerException.StackTrace}");
             }
             else
             {

@@ -6,7 +6,7 @@ using StocksApp.Models;
 namespace StocksApp.Filters.ActionFilters;
 
 /// <summary>
-/// An action filter that applies model validation to SellOrder() and BuyOrder() 
+/// An action filter that applies model validation to both SellOrder() and BuyOrder() action methods in TradeController
 /// </summary>
 public class CreateOrderActionFilter : IAsyncActionFilter
 {
@@ -14,6 +14,8 @@ public class CreateOrderActionFilter : IAsyncActionFilter
 
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
+        // TO DO: before logic
+
         if (context.Controller is TradeController tradeController)
         {
             var orderRequest = context.ActionArguments["orderRequest"] as IOrderRequest;
@@ -23,7 +25,7 @@ public class CreateOrderActionFilter : IAsyncActionFilter
                 // update date of order
                 orderRequest.DateAndTimeOfOrder = DateTime.Now;
 
-                // re-validate the model object aqfter updating the date
+                // re-validate the model object after updating the date
                 tradeController.ModelState.Clear();
                 tradeController.TryValidateModel(orderRequest);
 
@@ -36,14 +38,11 @@ public class CreateOrderActionFilter : IAsyncActionFilter
                         StockSymbol = orderRequest.StockSymbol,
                         Quantity = orderRequest.Quantity
                     };
-                    context.Result = tradeController.View(nameof(TradeController.Index), stockTrade);
+                    context.Result = tradeController.View(nameof(TradeController.Index), stockTrade); // short-circuits or skips the subsequent action filters & action method
+                    return;
                 }
-                else
-                    await next();
             }
-            else
-                await next();
         }
-        await next();
+        await next(); // calls the subsequent filter or action method
     }
 }

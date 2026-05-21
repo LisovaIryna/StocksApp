@@ -1,12 +1,9 @@
 using AutoFixture;
-using Entities;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using RepositoryContracts;
 using ServiceContracts.StocksService;
 using ServiceContracts.DTO;
-using Services;
 using Services.StocksService;
 
 namespace Tests.ServiceTests;
@@ -37,9 +34,9 @@ public class StocksServiceTest
         BuyOrderRequest? buyOrderRequest = null;
 
         // Mock
-        BuyOrder buyOrder = _fixture.Build<BuyOrder>().Create();
+        BuyOrder buyOrderFixture = _fixture.Build<BuyOrder>().Create();
         _stocksRepositoryMock.Setup(temp => temp.CreateBuyOrder(It.IsAny<BuyOrder>()))
-            .ReturnsAsync(buyOrder);
+            .ReturnsAsync(buyOrderFixture);
 
         // Act
         Func<Task> action = async() =>

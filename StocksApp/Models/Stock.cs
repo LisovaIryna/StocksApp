@@ -7,7 +7,7 @@ public class Stock
 
     public override bool Equals(object? obj)
     {
-        if (obj == null && obj is not Stock)
+        if (obj == null || obj is not Stock)
             return false;
 
         Stock other = (Stock)obj;

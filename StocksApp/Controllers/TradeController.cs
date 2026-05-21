@@ -4,9 +4,9 @@ using Rotativa.AspNetCore;
 using ServiceContracts.FinnhubService;
 using ServiceContracts.StocksService;
 using ServiceContracts.DTO;
-using StocksApp.Filters.ActionFilters;
 using StocksApp.Models;
 using System.Globalization;
+using StocksApp.Filters.ActionFilters;
 
 namespace StocksApp.Controllers;
 
@@ -40,20 +40,26 @@ public class TradeController : Controller
     [Route("~/[controller]/{stockSymbol?}")]
     public async Task<IActionResult> Index(string stockSymbol)
     {
+        // Log
         _logger.LogInformation("In TradeController.Index() action method");
         _logger.LogDebug("stockSymbol: {stockSymbol}", stockSymbol);
 
+        // reset stock symbol if not exists
         if (string.IsNullOrEmpty(stockSymbol))
             stockSymbol = "MSFT";
 
+        // get company profile from API server
         Dictionary<string, object>? profileDictionary = await _finnhubCompanyProfileService.GetCompanyProfile(stockSymbol);
+        // get stock price quotes from API server
         Dictionary<string, object>? quoteDictionary = await _finnhubStockPriceQuoteService.GetStockPriceQuote(stockSymbol);
 
+        // create model object
         StockTrade stockTrade = new()
         {
             StockSymbol = stockSymbol
         };
 
+        // load data from finnhubService into model object
         if (profileDictionary != null && quoteDictionary != null)
         {
             stockTrade = new StockTrade()
@@ -65,6 +71,7 @@ public class TradeController : Controller
             };
         }
 
+        // send Finnhub token to view
         ViewBag.FinnhubToken = _configuration["FinnhubToken"];
 
         return View(stockTrade);
@@ -73,9 +80,9 @@ public class TradeController : Controller
     [Route("[action]")]
     [HttpPost]
     [TypeFilter(typeof(CreateOrderActionFilter))]
-    public async Task<IActionResult> BuyOrder(BuyOrderRequest buyOrderRequest)
+    public async Task<IActionResult> BuyOrder(BuyOrderRequest orderRequest)
     {
-        BuyOrderResponse buyOrderResponse = await _stocksBuyOrdersService.CreateBuyOrder(buyOrderRequest);
+        BuyOrderResponse buyOrderResponse = await _stocksBuyOrdersService.CreateBuyOrder(orderRequest);
 
         return RedirectToAction(nameof(Orders));
     }
@@ -83,9 +90,9 @@ public class TradeController : Controller
     [Route("[action]")]
     [HttpPost]
     [TypeFilter(typeof(CreateOrderActionFilter))]
-    public async Task<IActionResult> SellOrder(SellOrderRequest sellOrderRequest)
+    public async Task<IActionResult> SellOrder(SellOrderRequest orderRequest)
     {
-        SellOrderResponse sellOrderResponse = await _stocksSellOrdersService.CreateSellOrder(sellOrderRequest);
+        SellOrderResponse sellOrderResponse = await _stocksSellOrdersService.CreateSellOrder(orderRequest);
 
         return RedirectToAction(nameof(Orders));
     }
@@ -110,6 +117,7 @@ public class TradeController : Controller
     [Route("OrdersPDF")]
     public async Task<IActionResult> OrdersPDF()
     {
+        // Get list of orders
         List<IOrderResponse> orders = new();
 
         orders.AddRange(await _stocksBuyOrdersService.GetBuyOrders());
@@ -119,6 +127,7 @@ public class TradeController : Controller
 
         ViewBag.TradingOptions = _tradingOptions;
 
+        // Return view as PDF
         return new ViewAsPdf("OrdersPDF", orders, ViewData)
         {
             PageMargins = new Rotativa.AspNetCore.Options.Margins()

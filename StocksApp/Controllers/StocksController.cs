@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using ServiceContracts;
 using ServiceContracts.FinnhubService;
 using StocksApp.Models;
 
@@ -28,6 +27,7 @@ public class StocksController : Controller
         _logger.LogInformation("In StocksController.Explore() action method");
         _logger.LogDebug("stock: {stock}, showAll: {showAll}", stock, showAll);
 
+        // get company profile from API server
         List<Dictionary<string, string>>? stocksDictionary = await _finnhubStocksService.GetStocks();
         List<Stock> stocks = new();
 
