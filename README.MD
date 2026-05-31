@@ -33,7 +33,7 @@ Educational project created during a Udemy course.
 
 ### Notes
 Authentication and authorization are not implemented in this version of the project.
-There is also another version of this project developed using Clean Architecture principles, which includes authentication and authorization functionality.
+There is also another version of this project developed using Clean Architecture principles.
 
 ---
 
@@ -70,4 +70,4 @@ There is also another version of this project developed using Clean Architecture
 
 ## Примітки
 У цій версії проєкту не реалізовано автентифікацію та авторизацію.  
-Також існує інша версія цього проєкту, розроблена з використанням принципів Clean Architecture, яка включає функціональність автентифікації та авторизації.
+Також існує інша версія цього проєкту, розроблена з використанням принципів Clean Architecture.
